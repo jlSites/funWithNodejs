@@ -2,61 +2,46 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 
-// list all heros by GET
-app.get('/hero', function (req, res) {
-   fs.readFile( __dirname + "/" + "heroes.json", 'utf8', function (err, data) {
-       console.log( data );
-       res.end( data );
-   });
+// list all pets by GET
+app.get('/pet', function (req, res) {
+    console.log(allPets);
+    res.end(JSON.stringify(allPets));
 })
 
-// add an hero by POST
-var hero = {
-   "hero4" : {
-      "email" : "hero4@abc.com",
-      "skill" : "light",
-      "phone" : "44444444",
-      "id": 4
-   }
-}
-
-app.post('/hero', function (req, res) {
-   // First read existing heros
-   fs.readFile( __dirname + "/" + "heroes.json", 'utf8', function (err, data) {
-       data = JSON.parse( data );
-       data["hero4"] = hero["hero4"];
-       console.log( data );
-       res.end( JSON.stringify(data));
-   });
+// add an pet by POST
+app.post('/pet', function (req, res) {
+    newPet = JSON.parse(req);
+    allPets[newPet.name] = newPet;
+    console.log(allPets);
+    res.end(JSON.stringify(allPets));
 })
 
-// get an hero by GET
-app.get('/hero/:id', function (req, res) {
-   // First read existing heros
-   fs.readFile( __dirname + "/" + "heroes.json", 'utf8', function (err, data) {
-       heros = JSON.parse( data );
-       var hero = heros["hero" + req.params.id] 
-       console.log( hero );
-       res.end( JSON.stringify(hero));
-   });
+// get an pet by GET
+app.get('/pet/:name', function (req, res) {
+    var found = allPets[req.params.name];
+    res.end(JSON.stringify(found));
 })
 
-// delete an hero by DELETE
-app.delete('/hero/:id', function (req, res) {
-   // First read existing heros
-   fs.readFile( __dirname + "/" + "heroes.json", 'utf8', function (err, data) {
-       data = JSON.parse( data );
-       delete data["hero" + req.params.id];
-       
-       console.log( data );
-       res.end( JSON.stringify(data));
-   });
+// delete an pet by DELETE
+app.delete('/pet/:name', function (req, res) {
+    delete allPets[req.params.name];
+    console.log(allPets);
+    res.end(JSON.stringify(allPets));
 })
+
+
+//////
+// read file into memory first
+var allPets;
+fs.readFile(__dirname + "/" + "pets.json", 'utf8', function (err, data) {
+    allPets = JSON.parse(data);
+    console.log(allPets);
+});
 
 // server is listening
 var server = app.listen(1338, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+    var host = server.address().address;
+    var port = server.address().port;
 
-  console.log("Hello RESTful API app listening at http://%s:%s", host, port);
+    console.log("Hello RESTful API app listening at http://%s:%s", host, port);
 });
