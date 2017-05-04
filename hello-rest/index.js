@@ -13,35 +13,56 @@ app.use(function (req, res, next) {
 app.get('/pet', function (req, res, next) {
     console.log(allPets);
     res.end(JSON.stringify(allPets));
-})
+});
 
-// add an pet by POST
+// add a pet by POST
 app.post('/pet', function (req, res, next) {
-    newPet = JSON.parse(req);
-    allPets[newPet.name] = newPet;
+    console.log(">>req=", req);
+    console.log(">>req.body=", req.body);
+    newPet = JSON.parse(req.body);
+    allPets.push(newPet);
     console.log(allPets);
     res.end(JSON.stringify(allPets));
-})
+});
 
-// get an pet by GET
+// get a pet by GET
 app.get('/pet/:name', function (req, res, next) {
-    var found = allPets[req.params.name];
-    res.end(JSON.stringify(found));
-})
+    var found;
+    for (i = 0; i < allPets.length; i++) {
+        if (allPets[i].name === req.params.name) {
+            found = allPets[i];
+            break;
+        }
+    }
 
-// delete an pet by DELETE
+    res.end(JSON.stringify(found));
+});
+
+// delete a pet by DELETE
 app.delete('/pet/:name', function (req, res, next) {
-    delete allPets[req.params.name];
+    var found = -1;
+    for (i = 0; i < allPets.length; i++) {
+        if (allPets[i].name === req.params.name) {
+            found = i;
+            break;
+        }
+    }
+
+    console.log(">>found=", found);
+    if (found != -1) {
+        allPets.splice(found, 1);
+    }
+
     console.log(allPets);
     res.end(JSON.stringify(allPets));
-})
+});
 
 
 //////
 // read file into memory first
 var allPets;
 fs.readFile(__dirname + "/" + "pets.json", 'utf8', function (err, data) {
-    allPets = JSON.parse(data);
+    allPets = JSON.parse(data)["data"];
     console.log(allPets);
 });
 

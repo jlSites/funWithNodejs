@@ -1,17 +1,19 @@
 {
-   "aaa" : {
-      "name" : "aaa",
-	  "age" : 1,
-	  "weight" : 11.11
-   },
-   "bbb" : {
-      "name" : "bbb",
-	  "age" : 2,
-	  "weight" : 22.22
-   },
-   "ccc" : {
-      "name" : "ccc",
-	  "age" : 3,
-	  "weight" : 33.33
-   }
+    "data": [
+        {
+            "name": "aaa",
+            "age": 1,
+            "weight": 11.11
+        },
+        {
+            "name": "bbb",
+            "age": 2,
+            "weight": 22.22
+        },
+        {
+            "name": "ccc",
+            "age": 3,
+            "weight": 33.33
+        }
+    ]
 }
