@@ -1,4 +1,7 @@
+'use strict'
+
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 var fs = require("fs");
 
@@ -9,32 +12,54 @@ app.use(function (req, res, next) {
     next();
 });
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
+
 // list all pets by GET
 app.get('/pet', function (req, res, next) {
-    console.log(allPets);
+    console.log(">>get=", allPets);
     res.end(JSON.stringify(allPets));
 });
 
-// add a pet by POST
+// add/update a pet by POST
 app.post('/pet', function (req, res, next) {
-    console.log(">>req=", req);
-    console.log(">>req.body=", req.body);
-    newPet = JSON.parse(req.body);
-    allPets.push(newPet);
-    console.log(allPets);
-    res.end(JSON.stringify(allPets));
+    //console.log(">>req=", req);
+    console.log(">>post=req.body=", req.body);
+    var postPet = req.body;
+    var found = -1;
+    for (var j = 0; j < allPets.length; j++) {
+        if (allPets[j].name === postPet.name) {
+            found = j;
+            break;
+        }
+    }
+
+    console.log(">>found=", found);
+    if (found != -1) {
+        // should replace
+        allPets.splice(found, 1, postPet);
+    } else {
+        // should new
+        allPets.push(postPet);
+    }
+
+    res.end(JSON.stringify(postPet));
 });
 
 // get a pet by GET
 app.get('/pet/:name', function (req, res, next) {
     var found;
-    for (i = 0; i < allPets.length; i++) {
+    for (var i = 0; i < allPets.length; i++) {
         if (allPets[i].name === req.params.name) {
             found = allPets[i];
             break;
         }
     }
 
+	console.log(">>get=found=", found);
     res.end(JSON.stringify(found));
 });
 
@@ -63,7 +88,7 @@ app.delete('/pet/:name', function (req, res, next) {
 var allPets;
 fs.readFile(__dirname + "/" + "pets.json", 'utf8', function (err, data) {
     allPets = JSON.parse(data)["data"];
-    console.log(allPets);
+    console.log(">>all=", allPets);
 });
 
 
