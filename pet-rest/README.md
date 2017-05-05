@@ -1,6 +1,6 @@
-# hello-rest
+# pet-rest
 
-Hello RESTful API app listening at http://:::1338. It builds based on nodejs and express.
+Pet RESTful API app listening at http://:::1338. It builds based on nodejs and express.
 
 This server reads a pets json file into memory while starting up, and then serves restful http requests.
 
