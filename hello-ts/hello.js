@@ -5,7 +5,7 @@ var HelloTs = (function () {
     function HelloTs() {
     }
     HelloTs.prototype.sayHi = function () {
-        console.log('say hi2');
+        console.log('say hi, ' + this.blahAge());
         return 1;
     };
     HelloTs.prototype.blahAge = function () {

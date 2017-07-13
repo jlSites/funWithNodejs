@@ -2,7 +2,7 @@ import { isOld } from "./age-service";
 
 class HelloTs {
     public sayHi(): number {
-        console.log('say hi');
+        console.log('say hi, ' + this.blahAge());
         return 1;
     }
 
