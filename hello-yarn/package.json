@@ -1,0 +1,15 @@
+{
+  "name": "hello-yarn",
+  "version": "1.0.0",
+  "description": "hello proj(package) built on yarn with typescript",
+  "main": "index.js",
+  "author": "blah lei",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc index.ts",
+    "start": "yarn build && node index.js"
+  },
+  "dependencies": {
+    "typescript": "^2.4.1"
+  }
+}
