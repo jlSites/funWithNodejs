@@ -1,0 +1,14 @@
+{
+  "name": "hello-express",
+  "version": "1.0.0",
+  "description": "1)mkdir hello-express   2)npm init   3)npm install express --save",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
