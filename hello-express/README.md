@@ -10,6 +10,12 @@
 6)curl localhost:3999  
 
 
+## express-generator
+1)npm install -g express-generator  
+
+2)express --pug hello-express-gen  
+
+
 
 
 
